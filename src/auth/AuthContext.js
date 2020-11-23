@@ -22,6 +22,7 @@ export function AuthProvider({children}){
 
     
     function signUp(email, password) {
+        console.log(email, password);
         return auth.createUserWithEmailAndPassword(email, password);
     }
     
