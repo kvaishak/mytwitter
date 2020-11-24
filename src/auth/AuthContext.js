@@ -11,10 +11,12 @@ export function useAuth(){
 export function AuthProvider({children}){
 
     const [currentUser, setCurrentUser] = useState();
+    const [userLoaded, setUserLoaded] = useState(false);
 
     useEffect(() => {
         const unsubscriber = auth.onAuthStateChanged(user => {
             setCurrentUser(user);
+            setUserLoaded(true);
         }); 
         return unsubscriber;            //this will un-subscribe the event listener
     }, []);
@@ -22,19 +24,24 @@ export function AuthProvider({children}){
 
     
     function signUp(email, password) {
-        console.log(email, password);
         return auth.createUserWithEmailAndPassword(email, password);
     }
     
+    function signIn(email, password) {
+        return auth.signInWithEmailAndPassword(email, password);
+    }
+
+
     //Data being served from the Context Provider
     const value = {
         currentUser,
-        signUp
+        signUp,
+        signIn
     }
     
     return (
         <AuthContext.Provider value={value}>
-            {children}
+            {userLoaded && children}
         </AuthContext.Provider>
       );
 }
