@@ -35,13 +35,18 @@ export function AuthProvider({children}){
         return auth.signOut();
     }
 
+    function resetPassword(email) {
+        return auth.sendPasswordResetEmail(email);
+    }
+
 
     //Data being served from the Context Provider
     const value = {
         currentUser,
         signUp,
         signIn,
-        logout
+        logout,
+        resetPassword
     }
     
     return (
