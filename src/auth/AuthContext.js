@@ -31,12 +31,17 @@ export function AuthProvider({children}){
         return auth.signInWithEmailAndPassword(email, password);
     }
 
+    function logout() {
+        return auth.signOut();
+    }
+
 
     //Data being served from the Context Provider
     const value = {
         currentUser,
         signUp,
-        signIn
+        signIn,
+        logout
     }
     
     return (
