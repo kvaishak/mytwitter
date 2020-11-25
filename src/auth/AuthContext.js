@@ -23,8 +23,16 @@ export function AuthProvider({children}){
 
 
     
-    function signUp(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password);
+    function signUp(email, password, username) {
+    
+          return new Promise((resolve, reject) => {
+            auth.createUserWithEmailAndPassword(email, password)
+            .then(result => {
+                result.user.updateProfile({
+                    displayName: username
+                }).then(result => resolve(result));
+             })
+          });
     }
     
     function signIn(email, password) {
@@ -47,6 +55,11 @@ export function AuthProvider({children}){
         return currentUser.updatePassword(password);
     }
 
+    function updateUserName(username){
+        console.log("Hello there", currentUser);
+        return currentUser.updateProfile({displayName: username});
+    }
+
     //Data being served from the Context Provider
     const value = {
         currentUser,
@@ -55,7 +68,8 @@ export function AuthProvider({children}){
         logout,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
+        updateUserName
     }
     
     return (

@@ -5,10 +5,11 @@ import { useAuth} from '../auth/AuthContext';
 
 const UpdateProfile = () => {
     const emailRef = useRef();
+    const usernameRef = useRef();
     const passwordRef = useRef();
     const confirmPasswordRef= useRef();
 
-    const { currentUser, updateEmail, updatePassword } = useAuth();
+    const { currentUser, updateEmail, updatePassword, updateUserName } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -30,6 +31,10 @@ const UpdateProfile = () => {
 
         if(passwordRef.current.value){
             promises.push(updatePassword(passwordRef.current.value));
+        }
+
+        if(currentUser.displayName !== usernameRef.current.value){
+            promises.push(updateUserName(usernameRef.current.value));
         }
 
         Promise.all(promises).then(()=> {
@@ -54,6 +59,11 @@ const UpdateProfile = () => {
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef} required defaultValue={currentUser.email}></Form.Control>
+                        </Form.Group>
+
+                        <Form.Group id="username">
+                            <Form.Label>User-name</Form.Label>
+                            <Form.Control type="text" ref={usernameRef} required defaultValue={currentUser.displayName}></Form.Control>
                         </Form.Group>
 
                         <Form.Group id="password">

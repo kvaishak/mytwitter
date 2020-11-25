@@ -5,10 +5,11 @@ import { useAuth} from '../auth/AuthContext';
 
 const Signup = () => {
     const emailRef = useRef();
+    const usernameRef = useRef();
     const passwordRef = useRef();
     const confirmPasswordRef= useRef();
 
-    const { signUp } = useAuth();
+    const { signUp, updateUserName } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -22,7 +23,9 @@ const Signup = () => {
         try{
             setError('');
             setLoading(true);
-            await signUp(emailRef.current.value, passwordRef.current.value );
+
+            await signUp(emailRef.current.value, passwordRef.current.value,  usernameRef.current.value);
+            
             history.push("/profile");
         }catch(e){
             setError('Failed to Create Account');
@@ -42,6 +45,11 @@ const Signup = () => {
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef} required></Form.Control>
+                        </Form.Group>
+
+                        <Form.Group id="username">
+                            <Form.Label>User-name</Form.Label>
+                            <Form.Control type="text" ref={usernameRef} required></Form.Control>
                         </Form.Group>
 
                         <Form.Group id="password">
