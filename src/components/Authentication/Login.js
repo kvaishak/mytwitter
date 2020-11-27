@@ -1,15 +1,14 @@
 import React, {useRef, useState } from 'react';
 import {Form, Button, Card, Alert} from 'react-bootstrap';
-import { Link , useHistory} from 'react-router-dom';
-import { useAuth} from '../auth/AuthContext';
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth} from '../../auth/AuthContext';
 
-const Signup = () => {
+
+const Login = () => {
     const emailRef = useRef();
-    const usernameRef = useRef();
     const passwordRef = useRef();
-    const confirmPasswordRef= useRef();
 
-    const { signUp, updateUserName } = useAuth();
+    const { signIn } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -17,18 +16,13 @@ const Signup = () => {
     async function handleSubmit(e){
         e.preventDefault();
 
-        if(passwordRef.current.value !== confirmPasswordRef.current.value){
-            return setError('Passoword do not match')
-        }
         try{
             setError('');
             setLoading(true);
-
-            await signUp(emailRef.current.value, passwordRef.current.value,  usernameRef.current.value);
-            
+            await signIn(emailRef.current.value, passwordRef.current.value );
             history.push("/profile");
         }catch(e){
-            setError('Failed to Create Account');
+            setError('Failed to Sign In');
         }
         setLoading(false);
     }
@@ -37,7 +31,7 @@ const Signup = () => {
         <React.Fragment>
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">Sign-up</h2>
+                    <h2 className="text-center mb-4">Sign-In</h2>
 
                     {error && <Alert variant="danger">{error}</Alert> }
 
@@ -47,31 +41,25 @@ const Signup = () => {
                             <Form.Control type="email" ref={emailRef} required></Form.Control>
                         </Form.Group>
 
-                        <Form.Group id="username">
-                            <Form.Label>User-name</Form.Label>
-                            <Form.Control type="text" ref={usernameRef} required></Form.Control>
-                        </Form.Group>
-
                         <Form.Group id="password">
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required></Form.Control>
                         </Form.Group>
 
-                        <Form.Group id="password_confirm">
-                            <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control type="password" ref={confirmPasswordRef} required></Form.Control>
-                        </Form.Group>
-
-                        <Button  disabled={loading} type="submit" className="w-100">Sign Up</Button>
+                        <Button  disabled={loading} type="submit" className="w-100">Sign In</Button>
 
                     </Form>
+
+                    <div className="w-100 text-center mt-3">
+                        <Link to="/forgot-password">Forgot Password ?</Link>
+                    </div>
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">
-                Already have an account ? <Link to="/login">Log-in</Link>
+                Need an account ? <Link to="/signup">Sign-up</Link>
             </div>
         </React.Fragment>
      );
 }
 
-export default Signup;
+export default Login;
