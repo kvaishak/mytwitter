@@ -1,5 +1,5 @@
 import React, {useRef, useState } from 'react';
-import {Form, Button, Card, Alert} from 'react-bootstrap';
+import {Form, Button, Card, Alert, Container} from 'react-bootstrap';
 import { Link , useHistory} from 'react-router-dom';
 import { useAuth} from '../../auth/AuthContext';
 
@@ -48,7 +48,8 @@ const UpdateProfile = () => {
     }
 
     return ( 
-        <React.Fragment>
+        <Container className="d-flex align-items-center justify-content-center" style={{minHeight: "100vh"}} >
+            <div className="w-100" style={{maxWidth:"400px"}}>
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Update Profile</h2>
@@ -84,7 +85,8 @@ const UpdateProfile = () => {
             <div className="w-100 text-center mt-2">
                 <Link to="/profile">Cancel</Link>
             </div>
-        </React.Fragment>
+        </div>
+        </Container>
      );
 }
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {Container, Alert} from 'react-bootstrap';
-import AllTweetsHead from '../components/AllTweetsHead';
+import AllTweetsHead from '../components/Shared/AllTweetsHead';
 import Tweet from '../components/Posts/Tweet';
 import axiosInstance from '../axios/ServerInstance';
-import AlertBox from '../components/AlertBox';
+import AlertBox from '../components/Shared/AlertBox';
 
 class AllUserPosts extends Component {
 
