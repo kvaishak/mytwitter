@@ -11,7 +11,7 @@ const Home = () => {
     return ( 
         <React.Fragment>
             <NavbarComponent />
-            <Header />
+            <Header isLoggedIn={currentUser?true:false}/>
             <AllUserPosts />
         </React.Fragment>
 
