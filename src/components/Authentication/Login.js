@@ -20,9 +20,7 @@ const Login = () => {
             setError('');
             setLoading(true);
             await signIn(emailRef.current.value, passwordRef.current.value );
-            // history.push("/profile");
             history.replace("/");
-            // window.location.href = "http://localhost:3000/";
         }catch(e){
             setError('Failed to Sign In');
         }

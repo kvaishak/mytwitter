@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Container, Alert} from 'react-bootstrap';
-import AllTweetsHead from '../components/Shared/AllTweetsHead';
+
 import Tweet from '../components/Posts/Tweet';
 import axiosInstance from '../axios/ServerInstance';
 import AlertBox from '../components/Shared/AlertBox';
@@ -22,10 +22,8 @@ class AllUserPosts extends Component {
 
         return ( 
             <Container className="justify-content-center mt-4" >
-                <AllTweetsHead />
                 { this.state.fetchError ? alert : allPosts}
             </Container>
-
          );
     }
 }
