@@ -28,7 +28,7 @@ const NavbarComponent = () => {
     }
 
     return ( 
-    <Navbar bg="primary" expand="lg" variant="dark" sticky="top" >
+    <Navbar bg="primary" expand="sm" variant="dark" sticky="top" >
          <Container className="" >
              <Navbar.Brand as={Link} to="/">My Tweeter</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

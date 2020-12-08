@@ -9,6 +9,8 @@ import ForgotPassword from '../components/Authentication/ForgotPassword';
 import UpdateProfile from '../components/User/UpdateProfile';
 import PrivateRoute from '../hoc/PrivateRoute';
 import Home from './Home';
+import UnknownPage from '../components/Shared/UnknownPage';
+import User from './User';
 
 
 function App() {
@@ -19,13 +21,16 @@ function App() {
               <Switch>
                 
                 <Route path="/" exact component={Home} />
+                <Route path="/user/:username" exact component={User} />
           
                 {/* Authentication */}
-                <PrivateRoute path="/profile" component={Profile} redirections="/login"/> 
                 <Route path="/signup" component={Signup} />
                 <Route path="/login" component={Login} />
                 <Route path="/forgot-password" component={ForgotPassword} />
+                <PrivateRoute path="/profile" component={Profile} redirections="/login"/> 
                 <PrivateRoute path="/update-profile" component={UpdateProfile} /> 
+
+                <Route component={UnknownPage} />
                 
               </Switch>
             </AuthProvider>
