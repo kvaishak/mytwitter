@@ -3,6 +3,7 @@ import {Form, Button, Card, Alert, Container} from 'react-bootstrap';
 import { Link , useHistory} from 'react-router-dom';
 import { useAuth} from '../../auth/AuthContext';
 
+
 const Signup = () => {
     const emailRef = useRef();
     const usernameRef = useRef();
@@ -24,8 +25,19 @@ const Signup = () => {
             setError('');
             setLoading(true);
 
-            await signUp(emailRef.current.value, passwordRef.current.value,  usernameRef.current.value);
-            
+            var currentUser = await signUp(emailRef.current.value, passwordRef.current.value,  usernameRef.current.value);
+
+            console.log("New User = ", currentUser);
+
+            //creating new user in our mysql database
+            // axiosInstance.post('/user/new', {
+            //         UserId: 'Fred',
+            //         Username: '23'
+            //     })
+            //     .then(response => {
+            //         this.setState({ posts : response.data})
+            //     }).catch(error => this.setState({fetchError:true}));
+
             history.push("/profile");
         }catch(e){
             setError('Failed to Create Account');

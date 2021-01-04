@@ -8,7 +8,7 @@ const Tweet = (props) => {
     return ( 
         <Container className="justify-content-center mt-4" style={{maxWidth: "80vh"}} >
             <Card>
-            <Card.Header as={Link} to={`/user/${username}`}>{firstname}</Card.Header>
+            <Card.Header as={Link} to={`/${username}`}>{firstname}</Card.Header>
             <Card.Body>
                 <blockquote className="blockquote mb-0">
                 <p>

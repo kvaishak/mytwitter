@@ -21,14 +21,16 @@ function App() {
               <Switch>
                 
                 <Route path="/" exact component={Home} />
-                <Route path="/user/:username" exact component={User} />
+                <Route path="/compose" exact component={User} />
           
                 {/* Authentication */}
                 <Route path="/signup" component={Signup} />
                 <Route path="/login" component={Login} />
                 <Route path="/forgot-password" component={ForgotPassword} />
                 <PrivateRoute path="/profile" component={Profile} redirections="/login"/> 
-                <PrivateRoute path="/update-profile" component={UpdateProfile} /> 
+                <PrivateRoute path="/update-profile" component={UpdateProfile} />
+
+                <Route path="/:username" exact component={User} />
 
                 <Route component={UnknownPage} />
                 

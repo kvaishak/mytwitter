@@ -1,5 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {auth} from './firebase'
+import {auth} from './firebase';
+import axiosInstance from "../axios/ServerInstance";
 
 const AuthContext = React.createContext();
 
@@ -28,6 +29,7 @@ export function AuthProvider({children}){
           return new Promise((resolve, reject) => {
             auth.createUserWithEmailAndPassword(email, password)
             .then(result => {
+                createNewUserInPostDB(result.user, username);
                 result.user.updateProfile({
                     displayName: username
                 }).then(result => resolve(result));
@@ -58,6 +60,19 @@ export function AuthProvider({children}){
     function updateUserName(username){
         console.log("Hello there", currentUser);
         return currentUser.updateProfile({displayName: username});
+    }
+
+    function createNewUserInPostDB(newUser, username){
+        fetch("http://localhost:8282/user/new", {
+            method: "POST",
+            body: JSON.stringify({
+                UserId: '12345678',
+                Username: username
+            }),
+        })
+            .then(response => {
+                console.log(response);
+            }).catch(error => console.log(error));
     }
 
     //Data being served from the Context Provider

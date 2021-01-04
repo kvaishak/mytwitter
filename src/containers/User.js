@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import {Container} from 'react-bootstrap';
+import {Container, Button} from 'react-bootstrap';
 
 import Tweet from '../components/Posts/Tweet';
 import axiosInstance from '../axios/ServerInstance';
 import AlertBox from '../components/Shared/AlertBox';
 import NavbarComponent from '../components/Shared/Navbar';
 import Header from '../components/Shared/Header';
+import UserPageControls from '../components/Shared/UserPageControls';
+import MyModal from '../components/UI/Modal';
 import {useAuth} from '../auth/AuthContext';
 
 function FollowerPost({ match }){
@@ -13,6 +15,7 @@ function FollowerPost({ match }){
   const { currentUser, logout } = useAuth();
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(false);
+  const [modalShow, setModalShow] = React.useState(false);
   const username = match.params.username;
 
     useEffect(() => {
@@ -30,6 +33,16 @@ function FollowerPost({ match }){
         <React.Fragment>
             <NavbarComponent />
             <Header isLoggedIn={currentUser?true:false} text={`${username}'s Tweets`}/>
+
+            {/*<Button variant="primary" onClick={() => setModalShow(true)}>*/}
+            {/*    Launch vertically centered modal*/}
+            {/*</Button>*/}
+
+            <UserPageControls />
+            <MyModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
             <Container className="justify-content-center mt-4" >
                 {error ? alert : allPosts}
             </Container>
