@@ -66,8 +66,8 @@ export function AuthProvider({children}){
         fetch("http://localhost:8282/user/new", {
             method: "POST",
             body: JSON.stringify({
-                UserId: '12345678',
-                Username: username
+                UserId: newUser.uid,
+                UserName: username
             }),
         })
             .then(response => {
