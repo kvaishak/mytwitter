@@ -5,7 +5,6 @@ import {useAuth} from '../../auth/AuthContext';
 
 const NavbarComponent = () => {
     const { currentUser, logout } = useAuth();
-    console.log(currentUser);
     const history = useHistory();
 
     const rightAuthButton = currentUser === null ? 
