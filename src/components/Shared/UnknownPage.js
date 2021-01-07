@@ -11,9 +11,9 @@ const UnknownPage = () => {
         
                 <Card className="p-5 justify-content-center">
                     <Card.Body>
-                        <h1 className="text-center mb-4">You have reached the Magic place</h1>
+                        <h1 className="text-center mb-4">You have reached the nknown Land</h1>
 
-                        <div>Either you or our application is being naughty. While we check whom to report to Santa why dont you go to somewhere safe.</div>
+                        <div>Go back to safetey weary traveller.</div>
                         <div className="w-100 text-center mt-3">
                             <Link to="/">Home</Link>
                         </div>
