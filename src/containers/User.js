@@ -38,7 +38,7 @@ function FollowerPost({ match }){
             {/*    Launch vertically centered modal*/}
             {/*</Button>*/}
 
-            <UserPageControls />
+            <UserPageControls username={username}/>
             <MyModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
