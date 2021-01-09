@@ -12,6 +12,7 @@ export function useAuth(){
 export function AuthProvider({children}){
 
     const [currentUser, setCurrentUser] = useState();
+    const [currentUserJWT, setCurrentUserJWT] = useState();
     const [userLoaded, setUserLoaded] = useState(false);
 
     useEffect(() => {
@@ -38,7 +39,15 @@ export function AuthProvider({children}){
     }
     
     function signIn(email, password) {
-        return auth.signInWithEmailAndPassword(email, password);
+
+        return new Promise((resolve, reject) => {
+            auth.signInWithEmailAndPassword(email, password)
+            .then(result => {
+                fetchAndUpdateUserJWT(result.user);
+                resolve();
+            });
+        })
+        
     }
 
     function logout() {
@@ -58,7 +67,6 @@ export function AuthProvider({children}){
     }
 
     function updateUserName(username){
-        console.log("Hello there", currentUser);
         return currentUser.updateProfile({displayName: username});
     }
 
@@ -70,21 +78,39 @@ export function AuthProvider({children}){
                 UserName: username
             }),
         })
-            .then(response => {
-                console.log(response);
-            }).catch(error => console.log(error));
+        .then(response => {
+            console.log(response);
+        }).catch(error => console.log(error));
+    }
+
+    function fetchAndUpdateUserJWT(user){
+       const uid = user.uid;
+       axiosInstance.get('/user/auth', {
+
+        params: {
+            uid: uid
+        },
+
+       })
+       .then(response => {
+
+        setCurrentUserJWT(response.data);
+
+       }).catch(error => console.log(error));
     }
 
     //Data being served from the Context Provider
     const value = {
         currentUser,
+        currentUserJWT,
         signUp,
         signIn,
         logout,
         resetPassword,
         updateEmail,
         updatePassword,
-        updateUserName
+        updateUserName,
+        fetchAndUpdateUserJWT
     }
     
     return (

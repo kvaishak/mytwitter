@@ -12,7 +12,7 @@ import {useAuth} from '../auth/AuthContext';
 
 function FollowerPost({ match }){
 
-  const { currentUser, logout } = useAuth();
+  const { currentUser, currentUserJWT, fetchAndUpdateUserJWT} = useAuth();
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(false);
   const [modalShow, setModalShow] = React.useState(false);
@@ -23,6 +23,10 @@ function FollowerPost({ match }){
             .then(response => {
                 setPosts(response.data);
             }).catch(error => setError({fetchError:true}));
+
+            if(currentUser && !currentUserJWT){
+                fetchAndUpdateUserJWT(currentUser);
+            }
     },[]);
 
 
@@ -38,7 +42,7 @@ function FollowerPost({ match }){
             {/*    Launch vertically centered modal*/}
             {/*</Button>*/}
 
-            <UserPageControls username={username}/>
+            <UserPageControls username={username} userToken={currentUserJWT}/>
             <MyModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
