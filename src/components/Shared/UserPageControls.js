@@ -1,7 +1,7 @@
 import {Container, Card, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
 import {useAuth} from '../../auth/AuthContext';
 import axiosInstance from '../../axios/ServerInstance';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 
 const UserPageControls = (props) => {
@@ -11,6 +11,23 @@ const UserPageControls = (props) => {
     const [isFollower, setIsFollower] = useState(false);
 
     const buttonText = isFollower ? 'Following' : 'Follow user';
+
+
+
+    useEffect(() => {
+        axiosInstance.get('/user/following', {
+            params: {
+                followerName: username
+            },
+            headers: {
+                'Token': userToken
+            },
+            credentials: 'include'
+        })
+        .then(response => {
+           setIsFollower(response.data);
+        }).catch(error => console.log(error));
+    },[]);
 
 
     const handleUserFollow = function() {
