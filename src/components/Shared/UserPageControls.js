@@ -43,7 +43,8 @@ const UserPageControls = (props) => {
             credentials: 'include',
         })
         .then(response => {
-           setIsFollower(response.data);
+            let isFollowerResponse = follow === true ? response.data : !response.data;
+            setIsFollower(isFollowerResponse);
         }).catch(error => console.log(error));
     }
 

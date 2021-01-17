@@ -83,21 +83,48 @@ export function AuthProvider({children}){
         }).catch(error => console.log(error));
     }
 
+    // function fetchAndUpdateUserJWT(user){
+    //    const uid = user.uid;
+    //    axiosInstance.get('/user/auth', {
+
+    //     params: {
+    //         uid: uid
+    //     },
+
+    //    })
+    //    .then(response => {
+
+    //     setCurrentUserJWT(response.data);
+
+    //    }).catch(error => console.log(error));
+    // }
+
     function fetchAndUpdateUserJWT(user){
-       const uid = user.uid;
-       axiosInstance.get('/user/auth', {
 
-        params: {
-            uid: uid
-        },
-
-       })
-       .then(response => {
-
-        setCurrentUserJWT(response.data);
-
-       }).catch(error => console.log(error));
+        return new Promise((resolve, reject) => {
+            const uid = user.uid;
+                axiosInstance.get('/user/auth', {
+        
+                params: {
+                    uid: uid
+                },
+        
+                })
+                .then(response => {
+        
+                setCurrentUserJWT(response.data);
+                resolve(response.data);
+        
+                }).catch(error => {
+                    console.log(error)
+                    reject(error);   
+                });
+            
+        });
+    
     }
+
+        
 
     //Data being served from the Context Provider
     const value = {

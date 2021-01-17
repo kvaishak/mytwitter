@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Container, Button} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 
 import Tweet from '../components/Posts/Tweet';
 import axiosInstance from '../axios/ServerInstance';
@@ -15,6 +15,7 @@ function FollowerPost({ match }){
   const { currentUser, currentUserJWT, fetchAndUpdateUserJWT} = useAuth();
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(false);
+  const [fetchedJWT, setJWT] = useState();
   const [modalShow, setModalShow] = React.useState(false);
   const username = match.params.username;
 
@@ -25,7 +26,10 @@ function FollowerPost({ match }){
             }).catch(error => setError({fetchError:true}));
 
             if(currentUser && !currentUserJWT){
-                fetchAndUpdateUserJWT(currentUser);
+                fetchAndUpdateUserJWT(currentUser)
+                    .then(response =>  {
+                        setJWT(response);
+                    }).catch(error => console.log(error));
             }
     },[]);
 
@@ -42,7 +46,7 @@ function FollowerPost({ match }){
             {/*    Launch vertically centered modal*/}
             {/*</Button>*/}
 
-            <UserPageControls username={username} userToken={currentUserJWT}/>
+            {(fetchedJWT || currentUserJWT) && <UserPageControls username={username} userToken={currentUserJWT}/>}
             <MyModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
