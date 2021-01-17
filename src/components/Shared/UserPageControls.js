@@ -1,4 +1,4 @@
-import {Container, Card, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
+import {Container, ButtonToolbar, Button} from 'react-bootstrap';
 import {useAuth} from '../../auth/AuthContext';
 import axiosInstance from '../../axios/ServerInstance';
 import React, {useState, useEffect} from 'react';
@@ -6,12 +6,9 @@ import React, {useState, useEffect} from 'react';
 
 const UserPageControls = (props) => {
 
-    const { currentUser, logout } = useAuth();
+    const { currentUser } = useAuth();
     const { username, userToken } = props;
-    const [isFollower, setIsFollower] = useState(false);
-
-    const buttonText = isFollower ? 'Following' : 'Follow user';
-
+    const [isFollower, setIsFollower] = useState();
 
 
     useEffect(() => {
@@ -30,9 +27,11 @@ const UserPageControls = (props) => {
     },[]);
 
 
-    const handleUserFollow = function() {
+    const handleUserFollowToggle = function(follow = true) {
 
-        axiosInstance('user/follow',{
+        let url = follow ? 'user/follow': 'user/unfollow';
+
+        axiosInstance(url,{
 
             params: {
                 followerName: username
@@ -48,12 +47,18 @@ const UserPageControls = (props) => {
         }).catch(error => console.log(error));
     }
 
+    let followerBtn = null;
+    if(isFollower !== undefined){
+        const buttonText = isFollower ? 'Un Follow' : 'Follow user';
+        followerBtn = <Button onClick={() => handleUserFollowToggle(!isFollower)} disabled={!currentUser}>{buttonText}</Button>
+    }
+
     return (
         <Container className="justify-content-center mt-4" >
             <ButtonToolbar aria-label="Toolbar with button groups" className="justify-content-center">
-                <Button onClick={handleUserFollow} disabled={isFollower || !currentUser}>{buttonText}</Button>
+                {followerBtn}
             </ButtonToolbar>
-        </Container>
+         </Container>
     );
 }
 
