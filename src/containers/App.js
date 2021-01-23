@@ -11,6 +11,7 @@ import PrivateRoute from '../hoc/PrivateRoute';
 import Home from './Home';
 import UnknownPage from '../components/Shared/UnknownPage';
 import User from './User';
+import AllPosts from './AllPosts';
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
               <Switch>
                 
                 <Route path="/" exact component={Home} />
-                <Route path="/compose" exact component={User} />
+                <Route path="/all" exact component={AllPosts} />
           
                 {/* Authentication */}
                 <Route path="/signup" component={Signup} />

@@ -26,6 +26,8 @@ const NavbarComponent = () => {
         }
     }
 
+    console.log(currentUser);
+    
     return ( 
     <Navbar bg="primary" expand="sm" variant="dark" sticky="top" >
          <Container className="" >
