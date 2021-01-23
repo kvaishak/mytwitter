@@ -19,7 +19,7 @@ const Home = () => {
         <React.Fragment>
             <NavbarComponent />
             <Header isLoggedIn={currentUser?true:false} text={currentUser ? 'Follower Tweets': null}/>
-            {currentUser ? <FollowerPost /> : <AllUserPosts />}
+            {currentUserJWT ? <FollowerPost userId={currentUserJWT}/> : <AllUserPosts />}
         </React.Fragment>
 
      );

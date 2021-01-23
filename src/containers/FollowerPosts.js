@@ -9,11 +9,16 @@ class FollowerPosts extends Component {
 
     state = { posts:[], fetchError: false};
 
+
     componentDidMount(){        
+        
+        console.log(this.props.userId);
+
         axiosInstance.get('/tweets', {
-            params: {
-                username: 'alphy'
-            }
+            headers: {
+                'Token': this.props.userId
+            },
+            credentials: 'include'
         })
             .then(response => {
                 this.setState({ posts : response.data})
